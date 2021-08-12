@@ -4,8 +4,10 @@ const routes = [
     component: () => import('layouts/AuthLayout.vue'),
     children: [
       {
-        path: '',
+        path: 'login',
+        name: 'login',
         component: () => import('pages/Index.vue'),
+        meta: { no_auth: true }
       },
     ],
   },

@@ -7,12 +7,12 @@
         </q-card-section>
         <q-card-section>
           <q-form class="q-pa-sm" @keyup.enter="onLogin">
-            <q-input v-model="email" clearable label="Email" square type="email">
+            <q-input v-model="body.email" clearable label="Email" square type="email">
               <template v-slot:prepend>
                 <q-icon name="email"/>
               </template>
             </q-input>
-            <q-input v-model="password" clearable label="Password" square type="password">
+            <q-input v-model="body.password" clearable label="Password" square type="password">
               <template v-slot:prepend>
                 <q-icon name="lock"/>
               </template>
@@ -36,18 +36,23 @@
 
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   name: 'PageIndex',
   data() {
     return {
-      email: '',
-      password: '',
+      body: {
+        email: '',
+        password: '',
+      },
     };
   },
   methods: {
-    onLogin() {
-      console.warn('login');
-      this.$router.push({ path: '/nodes' });
+    ...mapActions('auth', ['login']),
+
+    async onLogin() {
+      await this.login(this);
     },
     recoverPassword() {
       console.warn('recover');

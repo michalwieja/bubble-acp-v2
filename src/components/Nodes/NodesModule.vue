@@ -11,14 +11,8 @@
               </template>
             </q-input>
             <div class="q-gutter-sm q-pt-md">
-              <q-btn :disabled="!selected" color="primary" label="Add" size="sm"
-                     @click="handleClick"/>
-              <q-btn :disabled="!selected" color="red" label="remove" size="sm"
-                     @click="handleClick"/>
-              <q-checkbox v-model="visible" label="visible"/>
-              <q-checkbox v-model="allowed" label="allow to post"/>
+              <q-btn color="primary" label="Add" size="sm" @click="add = true"/>
             </div>
-
             <q-tree
               ref="tree"
               :nodes="nodeList"
@@ -26,15 +20,20 @@
               :filter="filter"
               default-expand-all
               :selected.sync="selected"
-
             />
           </q-scroll-area>
-
         </div>
       </template>
 
       <template v-slot:after>
-        <div class="q-px-sm "><h6 class="q-my-sm">ARTICLE LIST</h6>
+        <div class="q-px-sm "><h6 class="q-my-sm">NODE PROPERTIES</h6>
+          <div class="q-gutter-sm q-pt-sm">
+            <q-btn :disabled="!selected" label="Remove" size="sm" color="negative"
+                   @click="remove = true"/>
+            <q-btn :disabled="!selected" color="positive" label="edit" size="sm"/>
+            <q-checkbox v-model="visible" label="visible"/>
+            <q-checkbox v-model="allowed" label="allow to post"/>
+          </div>
           <q-scroll-area style="height: 500px;">
 
             <div v-if="selected">
@@ -53,6 +52,38 @@
       </template>
 
     </q-splitter>
+    <!--add dialog-->
+    <q-dialog v-model="add">
+      <q-card style="min-width: 350px">
+        <q-card-section>
+          <div class="text-h6">Add new node</div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          <q-input dense v-model="body.name" autofocus @keyup.enter="handleAdd"/>
+        </q-card-section>
+
+        <q-card-actions align="right" class="text-primary">
+          <q-btn flat label="Cancel" v-close-popup/>
+          <q-btn flat label="Add" @click="handleAdd" v-close-popup/>
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+    <!--remove dialog    -->
+
+    <q-dialog v-model="remove">
+      <q-card>
+        <q-card-section class="row items-center">
+          <q-avatar icon="delete" color="negative" text-color="white"/>
+          <span class="q-ml-sm">Are you sure You want to delete</span>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="Cancel" color="primary" v-close-popup/>
+          <q-btn flat label="Remove" color="primary" v-close-popup @click="handleRemove"/>
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
@@ -67,7 +98,12 @@ export default {
       filter: '',
       visible: true,
       allowed: true,
-      selected: null
+      selected: null,
+      remove: false,
+      add: false,
+      body: {
+        name: ''
+      }
     };
   },
   methods: {
@@ -75,8 +111,17 @@ export default {
       this.filter = '';
       this.$refs.filter.focus();
     },
-    handleClick() {
-      console.warn('klik');
+    handleAdd() {
+      this.$q.notify({
+        type: 'positive',
+        message: `Node added`
+      });
+    },
+    handleRemove() {
+      this.$q.notify({
+        type: 'negative',
+        message: `Node removed`
+      });
     }
   },
   computed: {

@@ -1,15 +1,27 @@
 <template>
-  <q-page class="flex flex-center">
-    <img
-      alt="Quasar logo"
-      src="~assets/quasar-logo-vertical.svg"
-      style="width: 200px; height: 200px"
-    >
+  <q-page>
+    <div class="row q-pa-md">
+      <AuthorList/>
+      <AuthorInfo/>
+      <ArticleList/>
+
+    </div>
   </q-page>
 </template>
 
 <script>
+
+
+
+import AuthorList from 'components/Author/AuthorList';
+import AuthorInfo from 'components/Author/AuthorInfo';
+import ArticleList from 'components/Author/ArticleList';
 export default {
-  name: 'PageIndex'
-}
+  name: 'Author',
+  components: {
+    ArticleList,
+    AuthorInfo,
+    AuthorList
+  },
+};
 </script>
