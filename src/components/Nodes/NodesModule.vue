@@ -38,12 +38,9 @@
           </div>
           <q-scroll-area style="height: 500px;">
             <div v-if="selected">
-              {{ activeNode && activeNode.id }}
-              {{ nodeList }}
               <p v-if="activeNode && !activeNode.articles">No articles in selected category</p>
               <div v-if="activeNode && activeNode.articles">
                 <div v-for="article in activeNode.articles" :key="article.id">
-                  {{ activeNode }}
                   <p>ID: {{ article.id }}</p>
                   <p>Title: {{ article.title }}</p>
                   <p>Short: {{ article.short_desc }}</p>
