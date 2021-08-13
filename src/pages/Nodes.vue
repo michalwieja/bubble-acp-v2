@@ -5,22 +5,16 @@
     <q-separator class="q-ma-sm"/>
     <CategoryModule @addCategory="toggleModal('addCategory', true)"
                     @removeCategory="toggleModal('removeCategory',true)"/>
-    <AddNodeModal v-if="modal.addNode" :handleClose="()=>toggleModal('addNode')"/>
-    <RemoveNodeModal v-if="modal.removeNode" :handleClose="()=>toggleModal('removeNode')"/>
   </q-page>
 </template>
 
 <script>
 import NodesModule from 'components/Nodes/NodesModule';
 import CategoryModule from 'components/Nodes/CategoryModule';
-import AddNodeModal from 'components/Modal/AddNodeModal';
-import RemoveNodeModal from 'components/Modal/RemoveNodeModal';
 
 export default {
   name: 'PageIndex',
   components: {
-    RemoveNodeModal,
-    AddNodeModal,
     CategoryModule,
     NodesModule
   },
@@ -41,7 +35,6 @@ export default {
   async mounted() {
     const res = await this.$apiCall('bubble', 'list');
     console.warn('bubble', res);
-
   }
 };
 </script>

@@ -22,16 +22,19 @@ export default [{
                     id: 4.11,
                     title: 'Title of first article',
                     content: 'lorem ipusm ',
+                    children: []
                   },
                   {
                     id: 4.12,
                     title: 'Title of second article',
                     content: 'lorem ipusm ',
+                    children: []
                   },
                 ],
               }, {
                 id: 4.2,
                 label: 'Right',
+                children: [],
                 articles: [
                   {
                     id: 4.21,
@@ -47,6 +50,7 @@ export default [{
               }, {
                 id: 4.3,
                 label: 'Liberalism',
+                children: [],
                 articles: [
                   {
                     id: 4.31,
@@ -102,6 +106,7 @@ export default [{
             {
               id: 5,
               label: 'Opinions',
+              children: []
             },
             {
               id: 6,
@@ -110,10 +115,12 @@ export default [{
                 {
                   id: 6.1,
                   label: 'Interview',
+                  children: []
                 },
                 {
                   id: 6.2,
                   label: 'Biographies',
+                  children: []
                 },
               ],
             },
@@ -122,6 +129,7 @@ export default [{
         {
           id: 7,
           label: 'The Fututre',
+          children: []
         },
       ],
     },
@@ -129,6 +137,7 @@ export default [{
       id: 8,
       label: 'Science',
       icon: 'room_service',
+      children: []
     },
   ],
 }];

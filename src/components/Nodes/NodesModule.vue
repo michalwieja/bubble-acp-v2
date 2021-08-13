@@ -11,9 +11,11 @@
               </template>
             </q-input>
             <div class="q-gutter-sm q-pt-md">
-              <q-btn color="primary" label="Add" size="sm" @click="add = true"/>
+              <q-btn color="primary" label="Add" size="sm" @click="add = true"
+                     :disabled="!selected"/>
             </div>
             <q-tree
+              draggable="draggable"
               ref="tree"
               :nodes="nodeList"
               node-key="label"
@@ -35,11 +37,13 @@
             <q-checkbox v-model="allowed" label="allow to post"/>
           </div>
           <q-scroll-area style="height: 500px;">
-
             <div v-if="selected">
+              {{ activeNode && activeNode.id }}
+              {{ nodeList }}
               <p v-if="activeNode && !activeNode.articles">No articles in selected category</p>
               <div v-if="activeNode && activeNode.articles">
                 <div v-for="article in activeNode.articles" :key="article.id">
+                  {{ activeNode }}
                   <p>ID: {{ article.id }}</p>
                   <p>Title: {{ article.title }}</p>
                   <p>Short: {{ article.short_desc }}</p>
@@ -102,21 +106,39 @@ export default {
       remove: false,
       add: false,
       body: {
-        name: ''
+        name: '',
+        children: [],
+        id: Math.random()
       }
     };
   },
   methods: {
-    resetFilter() {
-      this.filter = '';
-      this.$refs.filter.focus();
+    addChildren(arr, id, children) {
+      arr.forEach(i => {
+        if (i.id == id) {
+          i.children = [...(i.children || []), ...children];
+        } else {
+          addDataToId(i.children || [], id, children);
+        }
+      });
     },
+
     handleAdd() {
+      this.addChildren(nodeList,
+        this.activeNode.id,
+        [this.body]);
+
       this.$q.notify({
         type: 'positive',
         message: `Node added`
       });
     },
+
+    resetFilter() {
+      this.filter = '';
+      this.$refs.filter.focus();
+    },
+
     handleRemove() {
       this.$q.notify({
         type: 'negative',
